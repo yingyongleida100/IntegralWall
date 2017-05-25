@@ -22,20 +22,20 @@ def processUserClick(env):
     result = json.dumps(result)
     return  result
 
+
 def processCheckIDFAs(env):
     result = {"message": "返回结果", "success": "true"}
     try:
         query = parse_qs(env['QUERY_STRING'])
         idfa = query.get('idfa', [''])[0]
         appid = query.get('appid', [''])[0]
-
-
-
-
+        userisactive=AppAgentFacade.SaveUserActive(idfa,appid)
+        userisactiveive=json.dump(userisactive)
+        return userisactive
     except:
         result["message"] = traceback.format_exc()
         result["success"] = "false"
-    result = json.dumps(result)
+    userisactive = json.dumps(userisactive)
     return  result
 
 
@@ -44,7 +44,8 @@ def processUserActive(env):
     try:
         query = parse_qs(env['QUERY_STRING'])
         udid = query.get('udid', [''])[0]
-
+        ueractive=AppAgentFacade.FindAppAgent(udid)
+        if ueractive is not None:
 
 
 

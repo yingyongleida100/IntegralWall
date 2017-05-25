@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding=utf8
-import datetime
+from time import time
 from pymongo import MongoClient
 
 
@@ -15,5 +15,6 @@ class Utilitys(object):
         return Utilitys.connection
 
     @staticmethod
-    def GetNow():
-        return datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    def UnixTime():
+        return int(time.time())
+#get time &connect mongodb
