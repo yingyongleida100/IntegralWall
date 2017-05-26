@@ -40,8 +40,11 @@ Ann9 IntegralWall Interface Demo
     curl "http://ip:8081/?t=click&udid=b82c611c-41c8-11e7-a9dc-d017c28c4914&multipleurl=http://www.ann9.com&appid=12312345" |json_pp
     
     Check IDFA 接口
-    
     curl "http://ip:8081/?t=click&idfa=b82c611c-41c8-11e7-a9dc-d017c28c4914&appid=12312345“ |json_pp
+    
+    客户端用户激活接口
+    curl "http://ip:8081/?t=active&idfa=b82c611c-41c8-11e7-a9dc-d017c28c4914&appid=12312345“ |json_pp
+    
 
     
    
