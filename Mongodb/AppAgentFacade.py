@@ -30,7 +30,7 @@ class AppAgentFacade(object):
         if user is None:
             db.users.replace_one({"_id": idfa}, docBody, upsert=True)
             query = {"udid": idfa, "dateCreated": {"$gte": Utilitys.Utilitys.UnixTime() - 3600 * 24}}
-            docUserAgent = db.usersagent.find_one(query).sort("dateCreated", pymongo.ASCENDING)
+            docUserAgent = db.usersagent.find_one(query, sort=[("dateCreated", pymongo.ASCENDING)])
             if docUserAgent is not None:
                 isAcitve = docUserAgent["isAcitve"]
                 if isAcitve == 0:
