@@ -4,6 +4,8 @@ import Utilitys as Utilitys
 import pymongo
 import requests
 import traceback
+import sys
+sys.path.append('..')
 
 
 class AppAgentFacade(object):

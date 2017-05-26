@@ -2,10 +2,10 @@
 # coding=utf8
 from time import sleep
 import datetime
-
 from Mongodb import AppAgentFacade
 import traceback
-
+import sys
+sys.path.append('..')
 
 def Dojob():
     while True:

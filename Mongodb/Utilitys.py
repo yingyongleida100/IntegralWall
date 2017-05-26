@@ -16,5 +16,5 @@ class Utilitys(object):
 
     @staticmethod
     def UnixTime():
-        return int(time.time())
+        return int(time())
 #get time &connect mongodb
