@@ -55,6 +55,13 @@ Ann9 IntegralWall Interface Demo
     启动回调服务
     python ./Services/CallBackService.py
     
+    后台启动回调任务
+    
+    log.txt 为 记录日志文件
+    
+    nohup python ./Services/CallBackService.py >>log.txt 2>&1 &
+
+    
 
 
 ## 测试
