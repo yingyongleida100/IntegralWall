@@ -28,9 +28,21 @@ def processUserClick(env):
 def processCheckIDFAs(env):
     result = {}
     try:
-        query = parse_qs(env['QUERY_STRING'])
-        idfas = query.get('idfa', [''])[0]
-        appid = query.get('appid', [''])[0]
+        if env['REQUEST_METHOD'].upper() == 'POST':
+            
+            try:
+                request_body_size = int(env.get('CONTENT_LENGTH', 0))
+            except(ValueError):
+                request_body_size = 0
+
+            request_body = env['wsgi.input'].read(request_body_size)
+            d = parse_qs(request_body)
+            idfas = d.get('idfa', [''])[0]
+            appid = d.get('appid', [''])[0]
+        elif env['REQUEST_METHOD'].upper() == 'GET':
+            query = parse_qs(env['QUERY_STRING'])
+            idfas = query.get('idfa', [''])[0]
+            appid = query.get('appid', [''])[0]
         appAgentFacade = AppAgentFacade.AppAgentFacade()
         result = appAgentFacade.CheckIDFAs(idfas, appid)
     except:
