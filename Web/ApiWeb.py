@@ -21,31 +21,16 @@ def processUserClick(env):
         result["success"] = "false"
     result = json.dumps(result)
     return  result
-
+#save udid into mongodb.userAgent return result
 
 def processCheckIDFAs(env):
     result = {"message": "返回结果", "success": "true"}
     try:
         query = parse_qs(env['QUERY_STRING'])
-        idfa = query.get('idfa', [''])[0]
+        idfa= query.get('idfa', [''])[0]
         appid = query.get('appid', [''])[0]
-        userisactive=AppAgentFacade.SaveUserActive(idfa,appid)
-        userisactiveive=json.dump(userisactive)
-        return userisactive
-    except:
-        result["message"] = traceback.format_exc()
-        result["success"] = "false"
-    userisactive = json.dumps(userisactive)
-    return  result
-
-
-def processUserActive(env):
-    result = {"message": "返回结果", "success": "true"}
-    try:
-        query = parse_qs(env['QUERY_STRING'])
-        udid = query.get('udid', [''])[0]
-        ueractive=AppAgentFacade.FindAppAgent(udid)
-        if ueractive is not None:
+        SaveUserActive=AppAgentFacade.AppAgentFacade()
+        SaveUserActive.SaveUserActive(idfa,appid)
 
 
 
@@ -55,7 +40,31 @@ def processUserActive(env):
         result["success"] = "false"
     result = json.dumps(result)
     return  result
+#if idfa not in udid save idfa in to mongodb.users return result
+#
 
+def processUserActive(env):
+    result = {"message": "返回结果", "success": "true"}
+    try:
+        query = parse_qs(env['QUERY_STRING'])
+        udid = query.get('udid', [''])[0]
+        FindAppAgent=AppAgentFacade.AppAgentFacade()
+        FindAppAgent=FindAppAgent.FindAppAgent(udid)
+        if FindAppAgent is not None:
+            time=[]
+            finduseragentcreatetime=AppAgentFacade.FindAppAgentCreatetime(udid)
+            time.append(finduseragentcreatetime)
+            t=int(sorted(time,reverse=True)[0])
+            if t<86400:
+                AppAgentFacade.UpdateAppAgent(udid)
+
+
+    except:
+        result["message"] = traceback.format_exc()
+        result["success"] = "false"
+    result = json.dumps(result)
+    return  result
+#when udid in users.idfa and creat time < one day and top(1) then change useragent.isActive = 1
 
 def application(env, start_response):
     query = parse_qs(env['QUERY_STRING'])

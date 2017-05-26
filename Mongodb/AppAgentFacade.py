@@ -25,12 +25,11 @@ class AppAgentFacade(object):
         db,connection = self.GetAppAgentDB()
 
         user= db.usersagent.find_one({"udid":idfa},{"_id":1})
-        if user is not None:
-            db.users.find_one_and_update({"_id":idfa},docBody,{'$inc': {idfa: '1'}})
+        if user is None:
+            db.users.replace_one({"_id":idfa},docBody,upsert=True)
 
-        else:
-            db.users.find_one_and_update({"_id":idfa},docBody,{'$inc': {idfa: '0'}})
-        return db.users
+
+
 
 
     def UpdateAppAgent(self,udid):
@@ -38,13 +37,26 @@ class AppAgentFacade(object):
         UserIsActive= db.usersagent.fine_one({'udid':udid})
         UserIsActive['isAcitve']= '1'
         db.usersagent.save(UserIsActive)
+
+
     def FindAppAgent(self,udid):
         db, connection = self.GetAppAgentDB()
         udidFindAppAgent=db.users.find_one({"_id":udid},{"_id":1})
         return udidFindAppAgent
 
 
+    def FindUsersCreatetime(self,udid):
+        db, connection = self.GetAppAgentDB()
+        finduser=db.users.find_one({"_id":udid})
+        finduserscreatetime=finduser['dateCreated']
+        return finduserscreatetime
 
+
+    def FindAppAgentCreatetime(self, udid):
+        db, connection = self.GetAppAgentDB()
+        finduser = db.useragent.find_one({"_id": udid})
+        finduseragentcreatetime = finduser['dateCreated']
+        return finduseragentcreatetime
 
 
 
