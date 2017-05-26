@@ -13,34 +13,33 @@ def processUserClick(env):
         udid = query.get('udid', [''])[0]
         multipleurl = query.get('multipleurl', [''])[0]
         appid = query.get('appid', [''])[0]
-        appAgentFacade =AppAgentFacade.AppAgentFacade()
-        appAgentFacade.SaveUserClick(udid,multipleurl,appid)
+        appAgentFacade = AppAgentFacade.AppAgentFacade()
+        appAgentFacade.SaveUserClick(udid, multipleurl, appid)
 
     except:
         result["message"] = traceback.format_exc()
         result["success"] = "false"
     result = json.dumps(result)
-    return  result
-#save udid into mongodb.userAgent return result
+    return result
+
+
+# save udid into mongodb.userAgent return result
 
 def processCheckIDFAs(env):
-    result = {"message": "返回结果", "success": "true"}
+    result = {}
     try:
         query = parse_qs(env['QUERY_STRING'])
-        idfa= query.get('idfa', [''])[0]
+        idfa = query.get('idfa', [''])[0]
         appid = query.get('appid', [''])[0]
-        SaveUserActive=AppAgentFacade.AppAgentFacade()
-        SaveUserActive.SaveUserActive(idfa,appid)
-
-
-
-
+        appAgentFacade = AppAgentFacade.AppAgentFacade()
+        result = appAgentFacade.CheckIDFAs(idfa, appid)
     except:
-        result["message"] = traceback.format_exc()
-        result["success"] = "false"
+        print traceback.format_exc()
     result = json.dumps(result)
-    return  result
-#if idfa not in udid save idfa in to mongodb.users return result
+    return result
+
+
+# if idfa not in udid save idfa in to mongodb.users return result
 #
 
 def processUserActive(env):
@@ -48,23 +47,19 @@ def processUserActive(env):
     try:
         query = parse_qs(env['QUERY_STRING'])
         udid = query.get('udid', [''])[0]
-        FindAppAgent=AppAgentFacade.AppAgentFacade()
-        FindAppAgent=FindAppAgent.FindAppAgent(udid)
-        if FindAppAgent is not None:
-            time=[]
-            finduseragentcreatetime=AppAgentFacade.FindAppAgentCreatetime(udid)
-            time.append(finduseragentcreatetime)
-            t=int(sorted(time,reverse=True)[0])
-            if t<86400:
-                AppAgentFacade.UpdateAppAgent(udid)
+        appid = query.get('appid', [''])[0]
+        appAgentFacade = AppAgentFacade.AppAgentFacade()
+        appAgentFacade.SaveUserActive(udid, appid)
 
 
     except:
         result["message"] = traceback.format_exc()
         result["success"] = "false"
     result = json.dumps(result)
-    return  result
-#when udid in users.idfa and creat time < one day and top(1) then change useragent.isActive = 1
+    return result
+
+
+# when udid in users.idfa and creat time < one day and top(1) then change useragent.isActive = 1
 
 def application(env, start_response):
     query = parse_qs(env['QUERY_STRING'])
