@@ -2,10 +2,13 @@
 # coding=utf8
 from time import sleep
 import datetime
-from Mongodb import AppAgentFacade
 import traceback
 import sys
-sys.path.append('..')
+import os
+dir_path = sys.path.append(os.path.dirname(os.path.realpath(__file__)).replace("Services",""))
+if dir_path not in sys.path :
+    sys.path.append(dir_path)
+from Mongodb import AppAgentFacade
 
 def Dojob():
     while True:

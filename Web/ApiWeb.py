@@ -3,10 +3,12 @@
 from urlparse import parse_qs
 import json
 import traceback
-from Mongodb import AppAgentFacade  as AppAgentFacade
 import sys
-sys.path.append('..')
-
+import os
+dir_path =os.path.dirname(os.path.realpath(__file__)).replace("Web","")
+if dir_path not in sys.path :
+    sys.path.append(dir_path)
+from Mongodb import AppAgentFacade  as AppAgentFacade
 
 def processUserClick(env):
     result = {"message": "返回结果", "success": "true"}
