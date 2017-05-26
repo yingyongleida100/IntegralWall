@@ -22,6 +22,25 @@ Ann9 IntegralWall Interface Demo
 
     db.usersagent.createIndex({"isAcitve": 1, "iscallback": 1},{"background":true})
     db.usersagent.createIndex({"udid": 1, "dateCreated"：1},{"background":true})
+    
+5.nginx 配置
+    
+    1.修改Uwsgi/uwsgiApiWeb.ini
+    http = :9091 ->socket = :9091
+    
+    2.修改/etc/nginx/conf.d/default.conf
+    
+    server {
+        client_max_body_size 4G;
+        listen  80;  ## listen for ipv4; this line is default and implied
+        server_name test.integralwall.com;
+
+        location /{
+        uwsgi_pass  127.0.0.1:9091;
+        include /etc/nginx/uwsgi_params;
+        }
+    }
+
 
 ## 依赖组件
 
