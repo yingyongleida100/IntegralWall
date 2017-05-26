@@ -11,4 +11,6 @@ echo $'\n=====netstat -ntpl===========\n'
 netstat -ntpl
 echo $'\n\n'
 
+
+
 perl -pe 'eof&&s/$/\n\n===================\n/' /{Path}/IntegralWall/*.log
