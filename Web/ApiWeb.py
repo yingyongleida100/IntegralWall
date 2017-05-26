@@ -3,7 +3,7 @@
 from urlparse import parse_qs
 import json
 import traceback
-from Mongodb import AppAgentFacade  as AppAgentFacade
+import Mongodb.AppAgentFacade  as AppAgentFacade
 
 
 def processUserClick(env):
