@@ -18,6 +18,11 @@ Ann9 IntegralWall Interface Demo
 
     文件路径:Uwsgi/restartApiWeb.sh
     将文件中的{Path}替换为项目的绝对目录 
+    
+4.数据库增加索引
+
+    db.usersagent.createIndex({"isAcitve": 1, "iscallback": 1},{"background":true})
+    db.usersagent.createIndex({"udid": 1, "dateCreated"：1},{"background":true})
 
 ## 依赖组件
 
