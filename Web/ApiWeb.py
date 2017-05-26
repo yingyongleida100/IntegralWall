@@ -29,10 +29,10 @@ def processCheckIDFAs(env):
     result = {}
     try:
         query = parse_qs(env['QUERY_STRING'])
-        idfa = query.get('idfa', [''])[0]
+        idfas = query.get('idfa', [''])[0]
         appid = query.get('appid', [''])[0]
         appAgentFacade = AppAgentFacade.AppAgentFacade()
-        result = appAgentFacade.CheckIDFAs(idfa, appid)
+        result = appAgentFacade.CheckIDFAs(idfas, appid)
     except:
         print traceback.format_exc()
     result = json.dumps(result)
